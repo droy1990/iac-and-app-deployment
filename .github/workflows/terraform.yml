@@ -33,3 +33,10 @@ jobs:
       - name: Terraform Apply
         if: github.event_name == 'push'
         run: terraform -chdir=terraform apply -auto-approve
+
+      # Security Scan with Checkov
+      - name: Run Checkov Security Scan
+        uses: bridgecrewio/checkov-action@v9
+        with:
+          directory: terraform
+
