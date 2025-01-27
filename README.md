@@ -1,2 +1,2 @@
 # iac-and-app-deployment
-This is for a lab assessment, learning purpose.
+This repository is created to execute a lab assessment, this is for self learning purpose.
