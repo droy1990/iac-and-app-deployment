@@ -32,10 +32,21 @@ jobs:
             sudo apt-get install -y nginx
             echo "Hello, World!" > /var/www/html/index.html
             sudo systemctl restart nginx
+            
+  trivy-scan:
+    runs-on: ubuntu-latest
 
-      # Scan Docker Images for Vulnerabilities
-      - name: Scan Docker Images
-        uses: aquasecurity/trivy-action@v0.29.0
-        with:
-          image-ref: "gcr.io/your-project-id/hello-world-app:latest"
+    steps:
+      # Step 1: Install Trivy
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
 
+      # Step 2: Run Trivy Scan
+      - name: Trivy Code Scan
+        run: trivy fs .
