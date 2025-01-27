@@ -32,3 +32,10 @@ jobs:
             sudo apt-get install -y nginx
             echo "Hello, World!" > /var/www/html/index.html
             sudo systemctl restart nginx
+
+      # Scan Docker Images for Vulnerabilities
+      - name: Scan Docker Images
+        uses: aquasecurity/trivy-action@v0.5.0
+        with:
+          image-ref: "gcr.io/your-project-id/hello-world-app:latest"
+
