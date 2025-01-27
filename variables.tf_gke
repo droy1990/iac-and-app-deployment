@@ -1,0 +1,8 @@
+variable "project" {
+  default = "devops1-203207"
+}
+
+variable "region" {
+  default = "us-central1"
+}
+

@@ -1,0 +1,24 @@
+provider "google" {
+  project = var.project
+  region  = var.region
+}
+
+resource "google_container_cluster" "gke_cluster" {
+  name     = "droy-gke-cluster"
+  location = var.region
+
+  initial_node_count = 3
+  node_config {
+    machine_type = "e2-medium"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
+
+output "kubeconfig" {
+  value = google_container_cluster.gke_cluster.endpoint
+}
+
